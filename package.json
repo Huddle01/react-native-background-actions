@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "React Native background service library for running background tasks forever in Android & iOS",
   "keywords": [
+    "huddle01",
     "react-native",
     "background",
     "foreground",
