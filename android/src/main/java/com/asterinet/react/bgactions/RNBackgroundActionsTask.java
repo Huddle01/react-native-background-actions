@@ -17,7 +17,12 @@ import androidx.core.app.NotificationCompat;
 
 import com.facebook.react.HeadlessJsTaskService;
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.jstasks.HeadlessJsTaskConfig;
+import com.facebook.react.ReactInstanceManager;
+import com.facebook.react.ReactNativeHost;
+import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 final public class RNBackgroundActionsTask extends HeadlessJsTaskService {
 

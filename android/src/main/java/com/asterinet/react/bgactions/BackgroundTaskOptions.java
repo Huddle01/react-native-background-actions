@@ -1,5 +1,6 @@
 package com.asterinet.react.bgactions;
 
+import android.app.NotificationManager;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -7,6 +8,7 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContext;
