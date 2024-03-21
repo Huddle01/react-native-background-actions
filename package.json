@@ -1,0 +1,71 @@
+{
+  "name": "@huddle01/react-native-background-actions",
+  "version": "0.0.1",
+  "description": "React Native background service library for running background tasks forever in Android & iOS",
+  "keywords": [
+    "react-native",
+    "background",
+    "foreground",
+    "service",
+    "task",
+    "android",
+    "ios"
+  ],
+  "files": [
+    "/android/src/",
+    "/android/build.gradle",
+    "/ios",
+    "!Podfile*",
+    "/windows",
+    "/src",
+    "/lib",
+    "/*.podspec",
+    "/jest"
+  ],
+  "types": "lib/types/index.d.ts",
+  "main": "src/index.js",
+  "scripts": {
+    "ci": "yarn install --frozen-lockfile && yarn lint && yarn declaration:build && yarn checkjs && yarn test",
+    "lint": "eslint .",
+    "checkjs": "tsc",
+    "eslint:fix": "yarn eslint --fix",
+    "test": "jest ./__tests__/",
+    "declaration:build": "tsc -p ./declaration.tsconfig.json",
+    "prepublishOnly": "yarn declaration:build && yarn checkjs",
+    "pods": "cd ios && pod install",
+    "pub": "npm publish --access public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Huddle01/react-native-background-actions"
+  },
+  "author": "Max Wang",
+  "license": "MIT",
+  "peerDependencies": {
+    "react-native": ">=0.47.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.3",
+    "@semantic-release/changelog": "^5.0.0",
+    "@semantic-release/git": "^9.0.0",
+    "@semantic-release/github": "^7.0.0",
+    "@semantic-release/npm": "^7.0.0",
+    "@types/jest": "^25.1.3",
+    "@types/react-native": "^0.61.17",
+    "babel-jest": "^24.9.0",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-jest": "^23.6.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "jest": "^24.9.0",
+    "metro-react-native-babel-preset": "^0.56.4",
+    "prettier": "^1.18.2",
+    "react": "16.9.0",
+    "react-native": "^0.61.4",
+    "semantic-release": "^17.0.1",
+    "typescript": "4.0.3"
+  },
+  "dependencies": {
+    "eventemitter3": "^4.0.7"
+  }
+}
