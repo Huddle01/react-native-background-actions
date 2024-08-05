@@ -3,6 +3,7 @@
 
 @implementation RNBackgroundActions {
   UIBackgroundTaskIdentifier bgTask;
+  NSTimer *timer;
 }
 
 RCT_EXPORT_MODULE()
@@ -14,6 +15,10 @@ RCT_EXPORT_MODULE()
 - (void) _start
 {
   [self _stop];
+  
+  timer = [NSTimer scheduledTimerWithTimeInterval:30 repeats:YES block:^(NSTimer * _Nonnull timer) {
+    [self expirationHandler];
+  }];
   self->bgTask = [self _startNew];
 }
 
@@ -59,6 +64,8 @@ RCT_EXPORT_METHOD(stop:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
 {
   [self _stop];
+  [timer invalidate];
+  timer = NULL;
   resolve(nil);
 }
 

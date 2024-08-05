@@ -1,6 +1,6 @@
 {
   "name": "@huddle01/react-native-background-actions",
-  "version": "0.0.6",
+  "version": "0.0.7-dev.1",
   "description": "React Native background service library for running background tasks forever in Android & iOS",
   "keywords": [
     "huddle01",
@@ -34,7 +34,8 @@
     "declaration:build": "tsc -p ./declaration.tsconfig.json",
     "prepublishOnly": "yarn declaration:build && yarn checkjs",
     "pods": "cd ios && pod install",
-    "pub": "npm publish --access public"
+    "pub": "npm publish --access public",
+    "pub:dev": "npm publish --access public --tag dev"
   },
   "repository": {
     "type": "git",
