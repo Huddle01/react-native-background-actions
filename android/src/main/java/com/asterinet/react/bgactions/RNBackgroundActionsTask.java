@@ -7,6 +7,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ServiceInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.ServiceCompat;
 
 import com.facebook.react.HeadlessJsTaskService;
 import com.facebook.react.bridge.Arguments;
@@ -23,6 +25,8 @@ import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
+
+import java.util.ArrayList;
 
 final public class RNBackgroundActionsTask extends HeadlessJsTaskService {
 
@@ -52,7 +56,7 @@ final public class RNBackgroundActionsTask extends HeadlessJsTaskService {
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             contentIntent = PendingIntent.getActivity(context,0, notificationIntent, PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_ALLOW_UNSAFE_IMPLICIT_INTENT);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_MUTABLE);
+            contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         } else {
@@ -95,6 +99,7 @@ final public class RNBackgroundActionsTask extends HeadlessJsTaskService {
         return null;
     }
 
+    @SuppressLint("ForegroundServiceType")
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         final Bundle extras = intent.getExtras();
@@ -110,7 +115,14 @@ final public class RNBackgroundActionsTask extends HeadlessJsTaskService {
             notification.flags |= Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;
         }
 
-        startForeground(SERVICE_NOTIFICATION_ID, notification);
+        int type = this.getServiceType(bgOptions.getServiceTypes());
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            startForeground(SERVICE_NOTIFICATION_ID, notification, type);
+        } else {
+            startForeground(SERVICE_NOTIFICATION_ID, notification);
+        }
+
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -156,5 +168,69 @@ final public class RNBackgroundActionsTask extends HeadlessJsTaskService {
         if (currentBgOptions != null && currentBgOptions.isStopOnTerminate()) {
             stopSelf();
         }
+    }
+
+    private int getServiceType(ArrayList<String> serviceTypeArray) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            return 0;
+        }
+
+        int type = 0;
+
+        for (String serviceType : serviceTypeArray) {
+            switch (serviceType) {
+                case "camera":
+                    type |= ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA;
+                    break;
+                case "connectedDevice":
+                    type |= ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE;
+                    break;
+                case "dataSync":
+                    type |= ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC;
+                    break;
+                case "health":
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                        type |= ServiceInfo.FOREGROUND_SERVICE_TYPE_HEALTH;
+                    }
+                    break;
+                case "location":
+                    type |= ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION;
+                    break;
+                case "mediaPlayback":
+                    type |= ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK;
+                    break;
+                case "mediaProjection":
+                    type |= ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION;
+                    break;
+                case "microphone":
+                    type |= ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE;
+                    break;
+                case "phoneCall":
+                    type |= ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL;
+                    break;
+                case "remoteMessaging":
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                        type |= ServiceInfo.FOREGROUND_SERVICE_TYPE_REMOTE_MESSAGING;
+                    }
+                    break;
+                case "shortService":
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                        type |= ServiceInfo.FOREGROUND_SERVICE_TYPE_SHORT_SERVICE;
+                    }
+                    break;
+                case "specialUse":
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                        type |= ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE;
+                    }
+                    break;
+                case "systemExempted":
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                        type |= ServiceInfo.FOREGROUND_SERVICE_TYPE_SYSTEM_EXEMPTED;
+                    }
+                    break;
+            }
+        }
+
+        return type;
     }
 }

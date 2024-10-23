@@ -1,6 +1,6 @@
 {
   "name": "@huddle01/react-native-background-actions",
-  "version": "0.0.7-dev.1",
+  "version": "0.0.7-dev.2",
   "description": "React Native background service library for running background tasks forever in Android & iOS",
   "keywords": [
     "huddle01",

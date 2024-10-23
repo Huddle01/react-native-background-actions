@@ -30,6 +30,7 @@ export type BackgroundTaskOptions = {
     ongoing?: boolean | undefined;
     autoCancel?: boolean | undefined;
     stopOnTerminate?: boolean | undefined;
+    serviceTypes?: string | undefined;
     progressBar?: {
         max: number;
         value: number;
@@ -49,6 +50,7 @@ declare const backgroundServer: BackgroundServer;
  *            ongoing?: boolean,
  *            autoCancel?: boolean,
  *            stopOnTerminate?: boolean,
+ *            serviceTypes?: string,
  *            progressBar?: {max: number, value: number, indeterminate?: boolean},
  *            }} BackgroundTaskOptions
  * @extends EventEmitter<'expiration',any>
@@ -83,6 +85,7 @@ declare class BackgroundServer extends EventEmitter<"expiration", any> {
      *          ongoing?: boolean,
      *          autoCancel?: boolean,
      *          stopOnTerminate?: boolean,
+     *          serviceTypes?: string,
      *          progressBar?: {max: number, value: number, indeterminate?: boolean}}} taskData
      */
     updateNotification(taskData: {
@@ -100,6 +103,7 @@ declare class BackgroundServer extends EventEmitter<"expiration", any> {
         ongoing?: boolean;
         autoCancel?: boolean;
         stopOnTerminate?: boolean;
+        serviceTypes?: string;
         progressBar?: {
             max: number;
             value: number;
@@ -137,6 +141,7 @@ declare class BackgroundServer extends EventEmitter<"expiration", any> {
         ongoing?: boolean | undefined;
         autoCancel?: boolean | undefined;
         stopOnTerminate?: boolean | undefined;
+        serviceTypes?: string | undefined;
         progressBar?: {
             max: number;
             value: number;

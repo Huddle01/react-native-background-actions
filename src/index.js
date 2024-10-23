@@ -31,6 +31,7 @@ export const Importance = Object.freeze({
  *            ongoing?: boolean,
  *            autoCancel?: boolean,
  *            stopOnTerminate?: boolean,
+ *            serviceTypes?: string,
  *            progressBar?: {max: number, value: number, indeterminate?: boolean},
  *            }} BackgroundTaskOptions
  * @extends EventEmitter<'expiration',any>
@@ -73,6 +74,7 @@ class BackgroundServer extends EventEmitter {
      *          ongoing?: boolean,
      *          autoCancel?: boolean,
      *          stopOnTerminate?: boolean,
+     *          serviceTypes?: string,
      *          progressBar?: {max: number, value: number, indeterminate?: boolean}}} taskData
      */
     async updateNotification(taskData) {
@@ -150,6 +152,7 @@ class BackgroundServer extends EventEmitter {
             ongoing: options.ongoing || true,
             autoCancel: options.autoCancel || false,
             stopOnTerminate: options.stopOnTerminate || false,
+            serviceTypes: options.serviceTypes,
         };
     }
 

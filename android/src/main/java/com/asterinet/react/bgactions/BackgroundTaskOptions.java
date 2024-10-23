@@ -14,6 +14,10 @@ import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReadableMap;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
 public final class BackgroundTaskOptions {
     private final Bundle extras;
 
@@ -105,6 +109,15 @@ public final class BackgroundTaskOptions {
         } catch (Exception e) {
             extras.putBoolean("stopOnTerminate", false);
         }
+
+        try {
+            final String serviceTypes = options.getString("serviceTypes");
+            ArrayList<String> serviceTypeList = new ArrayList<>();
+            Collections.addAll(serviceTypeList, serviceTypes);
+            extras.putStringArrayList("serviceTypes", serviceTypeList);
+        } catch (Exception e) {
+            extras.putStringArrayList("serviceTypes", new ArrayList<>());
+        }
     }
 
     public Bundle getExtras() {
@@ -157,5 +170,9 @@ public final class BackgroundTaskOptions {
 
     public boolean isStopOnTerminate() {
         return extras.getBoolean("stopOnTerminate");
+    }
+
+    public ArrayList<String> getServiceTypes() {
+        return extras.getStringArrayList("serviceTypes");
     }
 }
