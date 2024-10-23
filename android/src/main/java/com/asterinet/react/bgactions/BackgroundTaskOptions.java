@@ -113,7 +113,11 @@ public final class BackgroundTaskOptions {
         try {
             final String serviceTypes = options.getString("serviceTypes");
             ArrayList<String> serviceTypeList = new ArrayList<>();
-            Collections.addAll(serviceTypeList, serviceTypes);
+            
+            if (serviceTypes != null) {
+                Collections.addAll(serviceTypeList, serviceTypes.split(","));    
+            }
+
             extras.putStringArrayList("serviceTypes", serviceTypeList);
         } catch (Exception e) {
             extras.putStringArrayList("serviceTypes", new ArrayList<>());
