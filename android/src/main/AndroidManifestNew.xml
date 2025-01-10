@@ -1,8 +1,3 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
- package="com.backgroundactions"
->
-  <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
- <application>
-        <service android:name=".RNBackgroundActionsTask"/>
-    </application>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+ 
 </manifest>
