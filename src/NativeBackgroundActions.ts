@@ -1,5 +1,5 @@
 import type { TurboModule } from 'react-native';
-import { TurboModuleRegistry } from 'react-native';
+import { TurboModuleRegistry, NativeModules } from 'react-native';
 
 export interface NotificationOptions {
   taskName: string;
@@ -26,24 +26,50 @@ export interface NotificationOptions {
 }
 
 export interface Spec extends TurboModule {
-  /**
-   * Start a background task with the given options
-   */
   start(options: NotificationOptions): Promise<void>;
-
-  /**
-   * Stop the currently running background task
-   */
   stop(): Promise<void>;
-
-  /**
-   * Update the notification with new options
-   */
   updateNotification(options: NotificationOptions): Promise<void>;
-
-  // Required for event emitter
   addListener(eventName: string): void;
   removeListeners(count: number): void;
 }
 
-export default TurboModuleRegistry.getEnforcing<Spec>('BackgroundActions');
+const isNewArchEnabled = global?.nativeFabricUIManager === 'Fabric';
+
+// Get the appropriate native module based on architecture
+const getNativeModule = (): Spec => {
+  if (isNewArchEnabled) {
+    return TurboModuleRegistry.getEnforcing<Spec>('BackgroundActions');
+  }
+
+  const RNBackgroundActions = NativeModules.RNBackgroundActions;
+
+  if (!RNBackgroundActions) {
+    throw new Error(
+      "react-native-background-actions didn't link properly. Make sure autolink is enabled or try to manually add native module"
+    );
+  }
+
+  return RNBackgroundActions;
+};
+
+// Create a proxy that lazily gets the native module and properly handles method calls
+const module = new Proxy<Spec>({} as Spec, {
+  get(_target: Spec, prop: string | symbol) {
+    const nativeModule = getNativeModule();
+
+    if (typeof prop === 'string') {
+      const value = nativeModule[prop as keyof Spec];
+
+      if (typeof value === 'function') {
+        // Bind the function to the native module to preserve context
+        return value.bind(nativeModule);
+      }
+
+      return value;
+    }
+
+    return undefined;
+  },
+});
+
+export default module;

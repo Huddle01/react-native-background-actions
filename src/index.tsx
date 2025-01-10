@@ -1,9 +1,8 @@
 import { Platform, AppRegistry, NativeEventEmitter } from 'react-native';
 import type { EmitterSubscription } from 'react-native';
 import EventEmitter from 'eventemitter3';
-import RNBackgroundActions, {
-  type NotificationOptions,
-} from './NativeBackgroundActions';
+import { type NotificationOptions } from './NativeBackgroundActions';
+import { default as RNBackgroundActions } from './NativeBackgroundActions';
 
 export const Priority = {
   MIN: -2,
@@ -115,6 +114,7 @@ class BackgroundServer extends EventEmitter {
         this._currentOptions.taskName,
         () => finalTask
       );
+
       await RNBackgroundActions.start(this._currentOptions);
       this._isRunning = true;
     } else {
