@@ -199,5 +199,8 @@
     "type": "turbo-module",
     "languages": "kotlin-objc",
     "version": "0.45.5"
+  },
+  "dependencies": {
+    "eventemitter3": "^5.0.1"
   }
 }
