@@ -1,6 +1,7 @@
 
 #import "generated/RNBackgroundActionsSpec/RNBackgroundActionsSpec.h"
+#import <React/RCTEventEmitter.h>
 
-@interface BackgroundActions : NSObject <NativeBackgroundActionsSpec>
+@interface BackgroundActions : RCTEventEmitter <NativeBackgroundActionsSpec>
 
 @end
