@@ -1,6 +1,6 @@
 {
   "name": "@huddle01/react-native-background-actions",
-  "version": "0.0.8",
+  "version": "0.0.9-narc-beta",
   "description": "React Native background service library for running background tasks forever in Android & iOS",
   "keywords": [
     "huddle01",
@@ -59,14 +59,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ponikar/react-native-background-actions.git"
+    "url": "https://github.com/Huddle01/react-native-background-actions"
   },
   "author": "Max Wang",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ponikar/react-native-background-actions/issues"
+    "url": "https://github.com/Huddle01/react-native-background-actions/issues"
   },
-  "homepage": "https://github.com/ponikar/react-native-background-actions#readme",
+  "homepage": "https://github.com/Huddle01/react-native-background-actions#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
