@@ -1,7 +1,17 @@
 {
-  "name": "react-native-background-actions",
-  "version": "0.1.0",
-  "description": "background activities ",
+  "name": "@huddle01/react-native-background-actions",
+  "version": "0.0.8",
+  "description": "React Native background service library for running background tasks forever in Android & iOS",
+  "keywords": [
+    "huddle01",
+    "react-native",
+    "background",
+    "foreground",
+    "service",
+    "task",
+    "android",
+    "ios"
+  ],
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
@@ -43,18 +53,15 @@
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
     "prepare": "bob build",
-    "release": "release-it"
+    "release": "release-it",
+    "pub": "npm publish --access public",
+    "pub:dev": "npm publish --access public --tag dev"
   },
-  "keywords": [
-    "react-native",
-    "ios",
-    "android"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ponikar/react-native-background-actions.git"
   },
-  "author": "Darshan Ponikar <drsofficial3k@gmail.com> (https://github.com/ponikar)",
+  "author": "Max Wang",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ponikar/react-native-background-actions/issues"
