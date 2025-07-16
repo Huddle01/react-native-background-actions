@@ -82,14 +82,13 @@ final public class RNBackgroundActionsTask extends HeadlessJsTaskService {
         return builder.build();
     }
 
-    /*
+
     @Nullable
-    private ReactContext getReactContext() {
+    private ReactContext getMyReactContext() {
         ReactNativeHost reactNativeHost = getReactNativeHost();
         ReactInstanceManager reactInstanceManager = reactNativeHost.getReactInstanceManager();
         return reactInstanceManager.getCurrentReactContext();
     }
-    */
 
     @Override
     protected @Nullable
@@ -144,7 +143,7 @@ final public class RNBackgroundActionsTask extends HeadlessJsTaskService {
 
         try {
             WritableMap params = Arguments.createMap();
-            getReactContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+            getMyReactContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                     .emit("appKilled", params);
         } catch (Exception e) {
             e.printStackTrace();
@@ -161,7 +160,7 @@ final public class RNBackgroundActionsTask extends HeadlessJsTaskService {
 
         try {
             WritableMap params = Arguments.createMap();
-            getReactContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+            getMyReactContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                     .emit("appKilled", params);
         } catch (Exception e) {
             e.printStackTrace();
